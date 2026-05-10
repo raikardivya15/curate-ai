@@ -125,9 +125,9 @@ export default function UploadPage() {
           <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground bg-white/5 py-3 px-4 rounded-lg border border-white/5">
             <FileText className="w-4 h-4 text-primary" />
             Looking for an example?
-            <button className="text-primary hover:underline font-medium ml-1">
+            <a href="/sample-bookmarks.html" download className="text-primary hover:underline font-medium ml-1">
               Download sample file
-            </button>
+            </a>
           </div>
         </motion.div>
       </main>
