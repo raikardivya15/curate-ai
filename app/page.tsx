@@ -144,8 +144,7 @@ gap-6">
 {[
 {
 title: "AI Categorization",
-text: "Automatically groups bookmarks into meaningful
-collections.",
+text: "Automatically groups bookmarks into meaningful collections.",
 },
 {
 title: "Semantic Search",
