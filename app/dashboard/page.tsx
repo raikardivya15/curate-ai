@@ -8,6 +8,49 @@ interface Bookmark {
   category: string;
 }
 
+const demoBookmarks: Bookmark[] = [
+  {
+    title: "OpenAI",
+    url: "https://openai.com",
+    category: "AI Tools",
+  },
+  {
+    title: "Claude AI",
+    url: "https://claude.ai",
+    category: "AI Tools",
+  },
+  {
+    title: "Behance",
+    url: "https://behance.net",
+    category: "Design Inspiration",
+  },
+  {
+    title: "Dribbble",
+    url: "https://dribbble.com",
+    category: "Design Inspiration",
+  },
+  {
+    title: "GitHub",
+    url: "https://github.com",
+    category: "Development",
+  },
+  {
+    title: "Vercel",
+    url: "https://vercel.com",
+    category: "Development",
+  },
+  {
+    title: "Notion",
+    url: "https://notion.so",
+    category: "Productivity",
+  },
+  {
+    title: "Linear",
+    url: "https://linear.app",
+    category: "Productivity",
+  },
+];
+
 export default function DashboardPage() {
   const [groupedBookmarks, setGroupedBookmarks] = useState<
     Record<string, Bookmark[]>
@@ -16,7 +59,10 @@ export default function DashboardPage() {
   useEffect(() => {
     const html = localStorage.getItem("bookmarksHtml");
 
-    if (!html) return;
+    if (!html) {
+      loadDemoBookmarks();
+      return;
+    }
 
     const parser = new DOMParser();
     const doc = parser.parseFromString(html, "text/html");
@@ -34,17 +80,26 @@ export default function DashboardPage() {
       };
     });
 
+    groupBookmarks(bookmarks);
+  }, []);
+
+  function loadDemoBookmarks() {
+    groupBookmarks(demoBookmarks);
+  }
+
+  function groupBookmarks(bookmarks: Bookmark[]) {
     const grouped = bookmarks.reduce((acc, bookmark) => {
       if (!acc[bookmark.category]) {
         acc[bookmark.category] = [];
       }
 
       acc[bookmark.category].push(bookmark);
+
       return acc;
     }, {} as Record<string, Bookmark[]>);
 
     setGroupedBookmarks(grouped);
-  }, []);
+  }
 
   return (
     <main className="min-h-screen bg-[#111113] text-white">
@@ -72,8 +127,18 @@ export default function DashboardPage() {
           </div>
         </aside>
 
-        {/* Main Content */}
+        {/* Main */}
         <section className="p-8 overflow-y-auto">
+
+          {/* Back Button */}
+          <div className="mb-8">
+            <a
+              href="/"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-white/10 bg-white/[0.03] text-sm text-zinc-300 hover:bg-white/[0.06] transition-all"
+            >
+              ← Back to Home
+            </a>
+          </div>
 
           {/* Header */}
           <div className="flex items-center justify-between mb-10 flex-wrap gap-4">
@@ -92,7 +157,7 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          {/* Categories */}
+          {/* Collections */}
           <div className="space-y-12">
             {Object.entries(groupedBookmarks).map(
               ([category, bookmarks]) => (
@@ -125,8 +190,7 @@ export default function DashboardPage() {
                         </h4>
 
                         <p className="text-sm text-zinc-400 leading-relaxed">
-                          AI-organized bookmark resource from your saved
-                          collection.
+                          AI-organized bookmark resource from your collection.
                         </p>
                       </a>
                     ))}
@@ -141,7 +205,7 @@ export default function DashboardPage() {
   );
 }
 
-/* ---------- AI-like Categorization ---------- */
+/* ---------- Categorization ---------- */
 
 function categorizeBookmark(title: string, url: string) {
   const text = `${title} ${url}`.toLowerCase();
@@ -169,27 +233,25 @@ function categorizeBookmark(title: string, url: string) {
     text.includes("github") ||
     text.includes("vercel") ||
     text.includes("nextjs") ||
-    text.includes("react") ||
-    text.includes("developer")
+    text.includes("react")
   ) {
     return "Development";
   }
 
   if (
-    text.includes("youtube") ||
-    text.includes("course") ||
-    text.includes("tutorial") ||
-    text.includes("learn")
+    text.includes("notion") ||
+    text.includes("linear") ||
+    text.includes("productivity")
   ) {
-    return "Learning";
+    return "Productivity";
   }
 
   if (
-    text.includes("notion") ||
-    text.includes("productivity") ||
-    text.includes("workflow")
+    text.includes("youtube") ||
+    text.includes("course") ||
+    text.includes("tutorial")
   ) {
-    return "Productivity";
+    return "Learning";
   }
 
   return "General";
