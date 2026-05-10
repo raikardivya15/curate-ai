@@ -148,13 +148,11 @@ text: "Automatically groups bookmarks into meaningful collections.",
 },
 {
 title: "Semantic Search",
-text: "Search saved knowledge naturally using AI-powered
-discovery.",
+text: "Search saved knowledge naturally using AI-powered discovery.",
 },
 {
 title: "Smart Dashboard",
-text: "Convert saved links into an organized productivity
-workspace.",
+text: "Convert saved links into an organized productivity workspace.",
 },
 ].map((feature) => (
 <div
