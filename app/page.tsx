@@ -1,68 +1,69 @@
 import Link from "next/link";
+import { ArrowRight, Brain, Search, Sparkles } from "lucide-react";
 
 export default function HomePage() {
   return (
     <main className="min-h-screen bg-black text-white overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(120,119,198,0.3),transparent_40%)]" />
+      {/* Background Glow */}
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute top-0 left-1/2 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-violet-500/20 blur-3xl" />
+        <div className="absolute bottom-0 right-0 h-[400px] w-[400px] rounded-full bg-cyan-500/10 blur-3xl" />
+      </div>
 
-      <section className="relative z-10 flex flex-col items-center justify-center text-center px-6 min-h-screen">
-        <div className="backdrop-blur-xl border border-white/10 bg-white/5 rounded-3xl px-10 py-16 max-w-5xl shadow-2xl">
-          
-          <p className="uppercase tracking-[0.3em] text-sm text-zinc-400 mb-6">
-            AI-Powered Bookmark Intelligence
-          </p>
+      {/* Navbar */}
+      <header className="flex items-center justify-between px-8 py-6 border-b border-white/10 backdrop-blur-xl sticky top-0 z-50 bg-black/40">
+        <div className="text-2xl font-bold tracking-tight">
+          Curate<span className="text-violet-400">AI</span>
+        </div>
 
-          <h1 className="text-6xl md:text-7xl font-bold leading-tight mb-6">
-            Turn chaotic bookmarks into your{" "}
-            <span className="bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">
-              second brain
-            </span>
-          </h1>
+        <div className="flex items-center gap-4">
+          <Link href="/dashboard">
+            <button className="px-5 py-2 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all">
+              View Demo
+            </button>
+          </Link>
 
-          <p className="text-zinc-400 text-lg max-w-2xl mx-auto mb-10 leading-relaxed">
-            CurateAI transforms messy browser bookmarks into an organized,
-            searchable, AI-powered knowledge dashboard.
-          </p>
+          <Link href="/upload">
+            <button className="px-5 py-2 rounded-xl bg-white text-black font-semibold hover:scale-105 transition-all">
+              Get Started
+            </button>
+          </Link>
+        </div>
+      </header>
 
-          <div className="flex flex-wrap gap-4 justify-center">
-            <Link href="/upload">
-              <button className="px-8 py-4 rounded-2xl bg-white text-black font-semibold hover:scale-105 transition-all">
-                Get Started
-              </button>
-            </Link>
+      {/* Hero */}
+      <section className="relative flex flex-col items-center justify-center text-center px-6 pt-28 pb-24">
+        <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-zinc-300 mb-8">
+          <Sparkles className="w-4 h-4 text-violet-400" />
+          AI-Powered Bookmark Intelligence
+        </div>
 
-            <Link href="/dashboard">
-              <button className="px-8 py-4 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all">
-                View Demo
-              </button>
-            </Link>
-          </div>
+        <h1 className="text-6xl md:text-7xl font-bold leading-tight max-w-5xl">
+          Turn messy bookmarks into your
+          <span className="bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">
+            {" "}second brain
+          </span>
+        </h1>
 
-          <div className="mt-14 grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
-              <h3 className="text-xl font-semibold mb-2">AI Categorization</h3>
-              <p className="text-zinc-400 text-sm">
-                Automatically organize bookmarks into meaningful smart collections.
-              </p>
-            </div>
+        <p className="mt-8 text-zinc-400 text-lg max-w-2xl leading-relaxed">
+          CurateAI transforms chaotic browser bookmarks into an organized,
+          searchable, AI-powered knowledge dashboard.
+        </p>
 
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
-              <h3 className="text-xl font-semibold mb-2">Smart Search</h3>
-              <p className="text-zinc-400 text-sm">
-                Instantly rediscover saved resources using natural language.
-              </p>
-            </div>
+        <div className="mt-10 flex flex-wrap justify-center gap-4">
+          <Link href="/upload">
+            <button className="flex items-center gap-2 px-8 py-4 rounded-2xl bg-white text-black font-semibold hover:scale-105 transition-all shadow-2xl">
+              Upload Bookmarks
+              <ArrowRight className="w-5 h-5" />
+            </button>
+          </Link>
 
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
-              <h3 className="text-xl font-semibold mb-2">Knowledge Dashboard</h3>
-              <p className="text-zinc-400 text-sm">
-                Turn passive bookmarks into an active productivity system.
-              </p>
-            </div>
-          </div>
-
+          <Link href="/dashboard">
+            <button className="px-8 py-4 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all">
+              View Live Demo
+            </button>
+          </Link>
         </div>
       </section>
-    </main>
-  );
+
 }
