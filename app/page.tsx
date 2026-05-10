@@ -172,7 +172,7 @@ p-6"
 {/* Footer */}
 <footer className="border-t border-white/10 py-8 text-center text-sm
 text-zinc-500">
-Built for the Build with Anakin Hackathon
+Built for the Build with Anakin Hackathon by raikardivya15
 </footer>
 </main>
 );
