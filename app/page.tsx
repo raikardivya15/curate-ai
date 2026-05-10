@@ -4,6 +4,7 @@ import { ArrowRight, Brain, Search, Sparkles } from "lucide-react";
 export default function HomePage() {
   return (
     <main className="min-h-screen bg-black text-white overflow-hidden">
+
       {/* Background Glow */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute top-0 left-1/2 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-violet-500/20 blur-3xl" />
@@ -11,8 +12,8 @@ export default function HomePage() {
       </div>
 
       {/* Navbar */}
-      <header className="flex items-center justify-between px-8 py-6 border-b border-white/10 backdrop-blur-xl sticky top-0 z-50 bg-black/40">
-        <div className="text-2xl font-bold tracking-tight">
+      <header className="flex items-center justify-between px-8 py-6 border-b border-white/10 backdrop-blur-xl">
+        <div className="text-2xl font-bold">
           Curate<span className="text-violet-400">AI</span>
         </div>
 
@@ -39,9 +40,9 @@ export default function HomePage() {
         </div>
 
         <h1 className="text-6xl md:text-7xl font-bold leading-tight max-w-5xl">
-          Turn messy bookmarks into your
+          Turn messy bookmarks into your{" "}
           <span className="bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">
-            {" "}second brain
+            second brain
           </span>
         </h1>
 
@@ -66,4 +67,41 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Features */}
+      <section className="px-6 pb-24 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        <div className="rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-xl">
+          <Brain className="w-10 h-10 text-violet-400 mb-5" />
+          <h3 className="text-2xl font-semibold mb-3">
+            AI Categorization
+          </h3>
+          <p className="text-zinc-400">
+            Automatically organize bookmarks into meaningful smart collections.
+          </p>
+        </div>
+
+        <div className="rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-xl">
+          <Search className="w-10 h-10 text-cyan-400 mb-5" />
+          <h3 className="text-2xl font-semibold mb-3">
+            Smart Search
+          </h3>
+          <p className="text-zinc-400">
+            Rediscover saved resources instantly using semantic AI search.
+          </p>
+        </div>
+
+        <div className="rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-xl">
+          <Sparkles className="w-10 h-10 text-pink-400 mb-5" />
+          <h3 className="text-2xl font-semibold mb-3">
+            Knowledge Dashboard
+          </h3>
+          <p className="text-zinc-400">
+            Transform passive saved links into an active productivity system.
+          </p>
+        </div>
+
+      </section>
+
+    </main>
+  );
 }
