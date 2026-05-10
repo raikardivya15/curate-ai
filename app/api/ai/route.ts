@@ -52,7 +52,7 @@ URL: ${url}
 Content Snippet (if available): ${scrapedText || "No content could be retrieved."}
 
 Your task is to:
-1. Assign it a concise Category (e.g., AI, Development, Design, Productivity, News, Entertainment, Learning, Tools, Finance, Reading, other).
+1. Assign it a concise Category that perfectly describes the topic (e.g., Tech, Food, UI/UX, AI, E-commerce, Health, Finance, etc.). Generate the most accurate 1-2 word category based on the content or URL.
 2. Write a 2-3 sentence summary of what this page is about. Focus on what it's useful for.
 3. Provide an array of 3-5 relevant lowercase tags.
 
