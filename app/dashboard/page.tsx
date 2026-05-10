@@ -295,74 +295,87 @@ export default function DashboardPage() {
           </div>
 
           {activeTab === "dashboard" && (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pb-12">
-            <AnimatePresence>
-              {filteredBookmarks.map((bookmark, idx) => (
-                <motion.div
-                  key={bookmark.url + idx}
-                  initial={{ opacity: 0, scale: 0.95, y: 10 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <Card className="h-full glass-card border-white/5 bg-white/[0.02] hover:bg-white/[0.04] transition-colors flex flex-col overflow-hidden group">
-                    <CardContent className="p-5 flex flex-col h-full relative">
-                      <div className="mb-3">
-                        {bookmark.status === "processing" ? (
-                          <Badge variant="secondary" className="bg-primary/10 text-primary border-primary/20 animate-pulse">
-                            Processing...
-                          </Badge>
-                        ) : bookmark.status === "done" ? (
-                          <Badge variant="secondary" className="bg-white/10 text-white border-white/5">
-                            {bookmark.category}
-                          </Badge>
-                        ) : (
-                          <Badge variant="outline" className="text-muted-foreground">
-                            Pending
-                          </Badge>
-                        )}
-                      </div>
-                      
-                      <h3 className="font-semibold text-lg leading-tight mb-2 line-clamp-2 group-hover:text-primary transition-colors">
-                        {bookmark.title}
-                      </h3>
-                      
-                      {bookmark.summary && (
-                        <p className="text-sm text-muted-foreground line-clamp-3 mb-4 flex-1">
-                          {bookmark.summary}
-                        </p>
-                      )}
-                      
-                      <div className="mt-auto pt-4 border-t border-white/5 flex items-center justify-between">
-                        <div className="flex gap-2 overflow-hidden">
-                          {bookmark.tags?.slice(0, 2).map(tag => (
-                            <span key={tag} className="text-xs text-muted-foreground bg-white/5 px-2 py-1 rounded-md whitespace-nowrap">
-                              #{tag}
-                            </span>
-                          ))}
-                        </div>
-                        <a 
-                          href={bookmark.url} 
-                          target="_blank" 
-                          rel="noreferrer"
-                          className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary/20 hover:text-primary transition-colors shrink-0"
-                        >
-                          <ExternalLink className="w-4 h-4" />
-                        </a>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
-            </AnimatePresence>
+            <div className="pb-12 space-y-10">
+              {Array.from(new Set(filteredBookmarks.map(b => b.category || "Pending"))).sort().map(cat => {
+                const categoryBookmarks = filteredBookmarks.filter(b => (b.category || "Pending") === cat);
+                return (
+                  <div key={cat} className="space-y-4">
+                    <h3 className="text-xl font-medium border-b border-white/10 pb-2 text-white/90 flex items-center gap-2">
+                      <div className="w-2 h-2 rounded-full bg-primary/60" />
+                      {cat} <span className="text-muted-foreground text-sm font-normal ml-2">({categoryBookmarks.length})</span>
+                    </h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                      <AnimatePresence>
+                        {categoryBookmarks.map((bookmark, idx) => (
+                          <motion.div
+                            key={bookmark.url + idx}
+                            initial={{ opacity: 0, scale: 0.95, y: 10 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.95 }}
+                            transition={{ duration: 0.3 }}
+                          >
+                            <Card className="h-full glass-card border-white/5 bg-white/[0.02] hover:bg-white/[0.04] transition-colors flex flex-col overflow-hidden group">
+                              <CardContent className="p-5 flex flex-col h-full relative">
+                                <div className="mb-3">
+                                  {bookmark.status === "processing" ? (
+                                    <Badge variant="secondary" className="bg-primary/10 text-primary border-primary/20 animate-pulse">
+                                      Processing...
+                                    </Badge>
+                                  ) : bookmark.status === "done" ? (
+                                    <Badge variant="secondary" className="bg-white/10 text-white border-white/5">
+                                      {bookmark.category}
+                                    </Badge>
+                                  ) : (
+                                    <Badge variant="outline" className="text-muted-foreground">
+                                      Pending
+                                    </Badge>
+                                  )}
+                                </div>
+                                
+                                <h3 className="font-semibold text-lg leading-tight mb-2 line-clamp-2 group-hover:text-primary transition-colors">
+                                  {bookmark.title}
+                                </h3>
+                                
+                                {bookmark.summary && (
+                                  <p className="text-sm text-muted-foreground line-clamp-3 mb-4 flex-1">
+                                    {bookmark.summary}
+                                  </p>
+                                )}
+                                
+                                <div className="mt-auto pt-4 border-t border-white/5 flex items-center justify-between">
+                                  <div className="flex gap-2 overflow-hidden">
+                                    {bookmark.tags?.slice(0, 2).map(tag => (
+                                      <span key={tag} className="text-xs text-muted-foreground bg-white/5 px-2 py-1 rounded-md whitespace-nowrap">
+                                        #{tag}
+                                      </span>
+                                    ))}
+                                  </div>
+                                  <a 
+                                    href={bookmark.url} 
+                                    target="_blank" 
+                                    rel="noreferrer"
+                                    className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary/20 hover:text-primary transition-colors shrink-0"
+                                  >
+                                    <ExternalLink className="w-4 h-4" />
+                                  </a>
+                                </div>
+                              </CardContent>
+                            </Card>
+                          </motion.div>
+                        ))}
+                      </AnimatePresence>
+                    </div>
+                  </div>
+                );
+              })}
             
-            {!isParsing && filteredBookmarks.length === 0 && (
-              <div className="col-span-full py-20 flex flex-col items-center justify-center text-muted-foreground">
-                <Search className="w-12 h-12 mb-4 opacity-20" />
-                <p>No bookmarks found.</p>
-              </div>
-            )}
-          </div>
+              {!isParsing && filteredBookmarks.length === 0 && (
+                <div className="col-span-full py-20 flex flex-col items-center justify-center text-muted-foreground">
+                  <Search className="w-12 h-12 mb-4 opacity-20" />
+                  <p>No bookmarks found.</p>
+                </div>
+              )}
+            </div>
           )}
 
           {activeTab !== "dashboard" && (
