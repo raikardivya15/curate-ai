@@ -80,4 +80,10 @@ export default function HomePage() {
                 "AI Tools",
                 "Design Inspiration",
                 "Development",
+                "Productivity",
+                "Research",
+              ].map((item) => (
+                <div
+                  key={item}
+                  className="px-4 py-3 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] transition-all text-sm"
 }
