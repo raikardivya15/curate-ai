@@ -27,6 +27,7 @@ export default function DashboardPage() {
   const [isParsing, setIsParsing] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState("dashboard");
 
   const processBookmarks = async (itemsToProcess: Bookmark[], currentAllItems: Bookmark[]) => {
     let current = [...currentAllItems];
@@ -148,13 +149,25 @@ export default function DashboardPage() {
 
         <ScrollArea className="flex-1 py-6 px-4">
           <div className="space-y-1">
-            <Button variant="secondary" className="w-full justify-start bg-white/5 hover:bg-white/10 text-white font-medium">
+            <Button 
+              variant={activeTab === "dashboard" ? "secondary" : "ghost"} 
+              className={`w-full justify-start ${activeTab === "dashboard" ? "bg-white/5 text-white font-medium" : "text-muted-foreground hover:text-white"}`}
+              onClick={() => setActiveTab("dashboard")}
+            >
               <LayoutDashboard className="mr-3 w-4 h-4 text-primary" /> Dashboard
             </Button>
-            <Button variant="ghost" className="w-full justify-start text-muted-foreground hover:text-white">
+            <Button 
+              variant={activeTab === "discover" ? "secondary" : "ghost"} 
+              className={`w-full justify-start ${activeTab === "discover" ? "bg-white/5 text-white font-medium" : "text-muted-foreground hover:text-white"}`}
+              onClick={() => setActiveTab("discover")}
+            >
               <Compass className="mr-3 w-4 h-4" /> Discover
             </Button>
-            <Button variant="ghost" className="w-full justify-start text-muted-foreground hover:text-white">
+            <Button 
+              variant={activeTab === "favorites" ? "secondary" : "ghost"} 
+              className={`w-full justify-start ${activeTab === "favorites" ? "bg-white/5 text-white font-medium" : "text-muted-foreground hover:text-white"}`}
+              onClick={() => setActiveTab("favorites")}
+            >
               <Star className="mr-3 w-4 h-4" /> Favorites
             </Button>
           </div>
@@ -169,8 +182,11 @@ export default function DashboardPage() {
                   key={cat} 
                   variant="ghost" 
                   size="sm"
-                  className={`w-full justify-between text-muted-foreground hover:text-white ${selectedCategory === cat ? 'bg-white/5 text-white' : ''}`}
-                  onClick={() => setSelectedCategory(cat)}
+                  className={`w-full justify-between text-muted-foreground hover:text-white ${selectedCategory === cat && activeTab === "dashboard" ? 'bg-white/5 text-white' : ''}`}
+                  onClick={() => {
+                    setSelectedCategory(cat);
+                    setActiveTab("dashboard");
+                  }}
                 >
                   <span className="flex items-center">
                     <div className="w-2 h-2 rounded-full bg-primary/50 mr-3" />
@@ -186,10 +202,14 @@ export default function DashboardPage() {
         </ScrollArea>
 
         <div className="p-4 border-t border-white/5">
-          <Button variant="ghost" className="w-full justify-start text-muted-foreground hover:text-white">
+          <Button 
+            variant={activeTab === "settings" ? "secondary" : "ghost"} 
+            className={`w-full justify-start ${activeTab === "settings" ? "bg-white/5 text-white" : "text-muted-foreground hover:text-white"}`}
+            onClick={() => setActiveTab("settings")}
+          >
             <Settings className="mr-3 w-4 h-4" /> Settings
           </Button>
-          <Button variant="ghost" className="w-full justify-start text-muted-foreground hover:text-red-400 mt-1">
+          <Button variant="ghost" className="w-full justify-start text-muted-foreground hover:text-red-400 mt-1" onClick={() => window.location.href = '/'}>
             <LogOut className="mr-3 w-4 h-4" /> Log out
           </Button>
         </div>
@@ -260,7 +280,12 @@ export default function DashboardPage() {
 
           {/* Grid */}
           <div className="mb-6 flex items-center justify-between">
-            <h2 className="text-xl font-semibold tracking-tight">Your Knowledge Base</h2>
+            <h2 className="text-xl font-semibold tracking-tight">
+              {activeTab === "dashboard" ? "Your Knowledge Base" : 
+               activeTab === "discover" ? "Discover New Content" : 
+               activeTab === "favorites" ? "Your Favorites" : 
+               activeTab === "settings" ? "Settings" : "Your Knowledge Base"}
+            </h2>
             {bookmarks.some(b => b.status === "processing") && (
               <div className="flex items-center text-sm text-primary">
                 <Loader2 className="w-4 h-4 mr-2 animate-spin" />
@@ -269,7 +294,8 @@ export default function DashboardPage() {
             )}
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pb-12">
+          {activeTab === "dashboard" && (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pb-12">
             <AnimatePresence>
               {filteredBookmarks.map((bookmark, idx) => (
                 <motion.div
@@ -337,6 +363,20 @@ export default function DashboardPage() {
               </div>
             )}
           </div>
+          )}
+
+          {activeTab !== "dashboard" && (
+            <div className="py-20 flex flex-col items-center justify-center text-muted-foreground border-2 border-dashed border-white/5 rounded-2xl p-8 glass-card">
+              <Compass className="w-12 h-12 mb-4 opacity-20" />
+              <h3 className="text-xl font-medium text-white mb-2 capitalize">{activeTab}</h3>
+              <p className="max-w-md text-center">
+                The {activeTab} view is currently under construction. Please check back soon or switch back to the Dashboard to manage your bookmarks.
+              </p>
+              <Button className="mt-6" variant="outline" onClick={() => setActiveTab("dashboard")}>
+                Return to Dashboard
+              </Button>
+            </div>
+          )}
         </ScrollArea>
       </main>
     </div>
