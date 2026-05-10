@@ -86,4 +86,95 @@ export default function HomePage() {
                 <div
                   key={item}
                   className="px-4 py-3 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] transition-all text-sm"
+                >
+                  {item}
+                </div>
+              ))}
+            </aside>
+
+            {/* Main Dashboard */}
+            <div className="p-6">
+              <div className="flex items-center justify-between mb-8 gap-4 flex-wrap">
+                <div>
+                  <h2 className="text-2xl font-semibold">
+                    Knowledge Dashboard
+                  </h2>
+                  <p className="text-zinc-400 text-sm mt-1">
+                    AI-organized bookmarks and insights
+                  </p>
+                </div>
+
+                <div className="px-4 py-2 rounded-xl border border-white/10 bg-white/[0.03] text-sm text-zinc-300">
+                  248 bookmarks indexed
+                </div>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-5">
+                {[1, 2, 3, 4].map((item) => (
+                  <div
+                    key={item}
+                    className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 hover:bg-white/[0.05] transition-all"
+                  >
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="text-sm text-zinc-500">
+                        AI Summary
+                      </div>
+
+                      <div className="text-xs px-2 py-1 rounded-lg bg-white/[0.05] text-zinc-400">
+                        Productivity
+                      </div>
+                    </div>
+
+                    <h3 className="text-lg font-medium mb-3">
+                      Building a personal knowledge workflow
+                    </h3>
+
+                    <p className="text-sm text-zinc-400 leading-relaxed">
+                      AI-generated summary preview for saved resources and articles.
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Features */}
+      <section className="max-w-6xl mx-auto px-6 pb-28 grid md:grid-cols-3 gap-6">
+        {[
+          {
+            title: "AI Categorization",
+            text: "Automatically groups bookmarks into meaningful collections.",
+          },
+          {
+            title: "Semantic Search",
+            text: "Search saved knowledge naturally using AI-powered discovery.",
+          },
+          {
+            title: "Smart Dashboard",
+            text: "Convert saved links into an organized productivity workspace.",
+          },
+        ].map((feature) => (
+          <div
+            key={feature.title}
+            className="rounded-2xl border border-white/10 bg-white/[0.03] p-6"
+          >
+            <h3 className="text-xl font-medium mb-3">
+              {feature.title}
+            </h3>
+
+            <p className="text-zinc-400 leading-relaxed text-sm">
+              {feature.text}
+            </p>
+          </div>
+        ))}
+      </section>
+
+      {/* Footer */}
+      <footer className="border-t border-white/10 py-8 text-center text-sm text-zinc-500">
+        Built for the Build with Anakin Hackathon
+      </footer>
+    </main>
+  );
 }
